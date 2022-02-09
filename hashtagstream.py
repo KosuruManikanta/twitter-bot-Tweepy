@@ -1,6 +1,9 @@
 import tweepy
-from cred import *
 import csv
+
+from cred import *
+
+
 class TwitterStreamListener(tweepy.streaming.StreamListener):
     ''' Handles data received from the stream. '''
     def on_status(self, status,count=0):
@@ -8,7 +11,8 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
             fieldnames = ['id']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({'id': status.user.id})
-        print(status.user.name+":"+status.text)
+        print(status)
+       # print(status.user.name+":"+status.text)
         return True
 
     def on_error(self, status_code):
@@ -21,7 +25,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
 listener = TwitterStreamListener()
 public_tweets = api.home_timeline()
 stream = tweepy.streaming.Stream(auth, listener)
-stream.filter(track=["#HathrasHorrorShocksIndia"])
+stream.filter(track=["#INDvWI"])
 
 
 #from line 7 to 11 we are opening a csv file and writing ID's of user for future usage
